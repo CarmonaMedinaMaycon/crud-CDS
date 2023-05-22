@@ -4,7 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const person_controller_1 = __importDefault(require("./modules/adapters/person.controller"));
 const app = (0, express_1.default)();
-app.use(express_1.default);
+app.use(express_1.default.json());
+app.use('/person', person_controller_1.default);
 app.listen(3001);
 console.log('ya jaloooo', 3001);
