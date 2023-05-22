@@ -25,5 +25,43 @@ class PersonGateway {
             }
         });
     }
+    findPerson(payload) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const id = payload;
+                const response = yield bdconfig_1.pool.query('SELECT * FROM person WHERE id = $1', [id]);
+                const personn = response.rows[0];
+                return personn;
+            }
+            catch (error) {
+                console.error(error);
+                throw new Error;
+            }
+        });
+    }
+    savePerson(payload) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { name, lastname, age, email } = payload;
+                const response = yield bdconfig_1.pool.query('INSERT INTO person (name, lastname, age, email)VALUES ($1, $2, $3, $4) RETURNING *;', [name, lastname, age, email]);
+                const createPerson = response.rows[0];
+                return createPerson;
+            }
+            catch (error) {
+                console.error(error);
+                throw new Error;
+            }
+        });
+    }
+    updatePerson(payload) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id, name, lastname, age, email } = payload;
+                const response = yield bdconfig_1.pool.query('');
+            }
+            catch (error) {
+            }
+        });
+    }
 }
 exports.PersonGateway = PersonGateway;
