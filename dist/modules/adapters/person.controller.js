@@ -19,6 +19,8 @@ const get_person_iteractor_1 = require("../use-cases/get-person-iteractor");
 const person_storage_gateway_1 = require("./person.storage.gateway");
 const getone_person_iterator_1 = require("../use-cases/getone-person-iterator");
 const insert_person_iterator_1 = require("../use-cases/insert-person-iterator");
+const update_person_iterator_1 = require("../use-cases/update-person-iterator");
+const delete_person_iterator_1 = require("../use-cases/delete-person-iterator");
 const router = (0, express_1.Router)();
 class PersonController {
     static getError() {
@@ -88,8 +90,53 @@ PersonController.insertPerson = (req, res) => __awaiter(void 0, void 0, void 0, 
         return res.status(_a.getError().code).json(_a.getError());
     }
 });
+PersonController.updatePerson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = parseInt(req.params.id);
+        const payload = Object.assign({ id: id }, req.body);
+        const repository = new person_storage_gateway_1.PersonGateway();
+        const iteractor = new update_person_iterator_1.UpdatePersonIterator(repository);
+        const updatePerson = yield iteractor.execude(payload);
+        let body = {
+            code: 200,
+            error: false,
+            message: "se atualizo",
+            count: 1,
+            entity: updatePerson
+        };
+        if (!updatePerson)
+            body = Object.assign(Object.assign({}, body), { code: 404, message: 'NOT_FOUND', count: undefined });
+        return res.status(body.code).json(body);
+    }
+    catch (error) {
+        return res.status(_a.getError().code).json(_a.getError());
+    }
+});
+PersonController.deletePerson = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = parseInt(req.params.id);
+        const repository = new person_storage_gateway_1.PersonGateway();
+        const iterator = new delete_person_iterator_1.DeletePersonIterator(repository);
+        const deletePerson = yield iterator.execude(id);
+        let body = {
+            code: 200,
+            error: false,
+            message: "borrado",
+            count: 1,
+            entity: deletePerson
+        };
+        if (!deletePerson)
+            body = Object.assign(Object.assign({}, body), { code: 404, message: 'NOT_FOUND', count: undefined });
+        return res.status(body.code).json(body);
+    }
+    catch (error) {
+        return res.status(_a.getError().code).json(_a.getError());
+    }
+});
 exports.PersonController = PersonController;
 router.get('/', PersonController.findAll);
 router.get('/:id', PersonController.findPerson);
 router.post('/', PersonController.insertPerson);
+router.put('/:id', PersonController.updatePerson);
+router.delete('/:id', PersonController.deletePerson);
 exports.default = router;

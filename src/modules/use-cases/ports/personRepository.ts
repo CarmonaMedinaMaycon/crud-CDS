@@ -7,5 +7,5 @@ export interface PersonRepository {
     findPerson(payload:number):Promise<person>
     savePerson(payload:InsertPersonDTO):Promise<person>
     updatePerson(payload:UpdatePersonDTO): Promise<person>
-    
+    deletePerson(payload: number): Promise<person>
 }

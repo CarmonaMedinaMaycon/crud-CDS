@@ -57,9 +57,27 @@ class PersonGateway {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id, name, lastname, age, email } = payload;
-                const response = yield bdconfig_1.pool.query('');
+                const response = yield bdconfig_1.pool.query('UPDATE person SET name= $2, lastname = $3, age = $4, email=$5 WHERE id= $1 RETURNING *;', [id, name, lastname, age, email]);
+                const updatePerson = response.rows[0];
+                return updatePerson;
             }
             catch (error) {
+                console.error(error);
+                throw new Error;
+            }
+        });
+    }
+    deletePerson(payload) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const id = payload;
+                const response = yield bdconfig_1.pool.query('DELETE FROM person WHERE id = $1 RETURNING *;', [id]);
+                const deletePerson = response.rows[0];
+                return deletePerson;
+            }
+            catch (error) {
+                console.error(error);
+                throw new Error;
             }
         });
     }

@@ -44,9 +44,25 @@ export class PersonGateway implements PersonRepository {
     async updatePerson(payload: UpdatePersonDTO): Promise<person> {
         try {
             const {id, name, lastname, age, email} = payload
-            const response = await pool.query('')
+            const response = await pool.query('UPDATE person SET name= $2, lastname = $3, age = $4, email=$5 WHERE id= $1 RETURNING *;', [id, name, lastname, age, email]);
+            const updatePerson: person = response.rows[0] as person
+            return updatePerson;
         } catch (error) {
-            
+            console.error(error);
+            throw new Error;            
+        }
+    }
+
+
+    async deletePerson(payload: number): Promise<person> {
+        try {
+            const id:number = payload;
+            const response =await pool.query('DELETE FROM person WHERE id = $1 RETURNING *;', [id])
+            const deletePerson: person=response.rows[0] as person
+            return deletePerson
+        } catch (error) {
+            console.error(error);
+            throw new Error;
         }
     }
 }
