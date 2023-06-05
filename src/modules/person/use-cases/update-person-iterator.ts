@@ -1,5 +1,5 @@
 import { PersonRepository } from "./ports/personRepository";
-import { person } from "../entities/person";
+import { person } from "../../person/entities/person";
 import { UpdatePersonDTO } from "../adapters/dto/update-personDTO";
 import { UseCase } from "@/kernel/contracts";
 

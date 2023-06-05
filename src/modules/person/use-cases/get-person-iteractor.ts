@@ -1,6 +1,6 @@
 import { UseCase } from "@/kernel/contracts";
 import { GetPersonDTO } from "../adapters/dto/get-personDTO";
-import { person } from "../entities/person";
+import { person } from "../../person/entities/person";
 import { PersonRepository } from "./ports/personRepository";
 
 export class GetPersonIterator implements UseCase<GetPersonDTO, person[]>{

@@ -1,7 +1,7 @@
 
 import { PersonRepository } from "../use-cases/ports/personRepository";
-import { person } from "../entities/person";
-import {pool} from "../../utils/bdconfig";
+import { person } from "../../person/entities/person";
+import {pool} from "../../../utils/bdconfig";
 import { InsertPersonDTO } from "./dto/insert-personDTO";
 import { UpdatePersonDTO } from "./dto/update-personDTO";
 

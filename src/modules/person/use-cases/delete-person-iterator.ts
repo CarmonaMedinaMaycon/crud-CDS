@@ -1,5 +1,5 @@
 import { PersonRepository } from "./ports/personRepository";
-import { person } from "../entities/person";
+import { person } from "../../person/entities/person";
 import { UseCase } from "@/kernel/contracts";
 
 export class DeletePersonIterator implements UseCase<number, person>{

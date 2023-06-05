@@ -1,7 +1,7 @@
 //express
 import {Response, Request, Router} from "express";
 //entities
-import { person } from "../entities/person";
+import { person } from "../../person/entities/person";
 import { PersonRepository } from "../use-cases/ports/personRepository";
 //iterators del crud
 import { GetPersonIterator }  from "../use-cases/get-person-iteractor";
